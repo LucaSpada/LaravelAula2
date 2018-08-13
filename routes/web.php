@@ -8,6 +8,7 @@
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
+!!!!!!!!!!!!!!!!!!!!!!! ver no moodle como fazero mensagenscontroller e depois fazer a rota do mensagensS
 |
 */
 
@@ -16,4 +17,5 @@ Route::get('/', function () {
 });
 
 Route::get('/atividades', 'AtividadeController@index');
+Route::get('/atividades/{id}', 'AtividadeController@show');
 
