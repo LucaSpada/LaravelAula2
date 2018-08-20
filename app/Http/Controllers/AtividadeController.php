@@ -25,7 +25,7 @@ class AtividadeController extends Controller
      */
     public function create()
     {
-        //
+        return view ('atividade.create');   
     }
 
     /**
@@ -36,7 +36,28 @@ class AtividadeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mensagens = array(
+            'title.required' => 'É obrigatório um título para a atividade',
+            'description.required' => 'É obrigatório uma descrição para a atividade',
+            'scheduleto.required' => 'É obrigatório o cadastro da data/hora da atividade',
+
+            );
+
+        $regras = array(
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'scheduleto' => 'required|string',
+
+            );
+
+        $validador = Validador::make($request->all(), $regras, $mensagens);
+
+        if ($validador->fails()){
+            return redirect('atividades/crate')
+            ->withErrors($validador)
+            ->withInput($request->all);
+        }
+
     }
 
     /**
