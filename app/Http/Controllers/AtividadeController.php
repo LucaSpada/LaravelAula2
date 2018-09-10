@@ -24,7 +24,7 @@ class AtividadeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+       public function create()
     {
         return view ('atividade.create');   
     }
@@ -87,11 +87,11 @@ class AtividadeController extends Controller
      * @param  \App\Atividade  $atividade
      * @return \Illuminate\Http\Response
      */
-    public function edit(Atividade $atividade)
+    public function edit($id)
     {
-        //
+        $obj_Atividade = Atividade::find($id);
+        return view ('atividade.edit',['atividade'=> $obj_Atividade]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -99,19 +99,48 @@ class AtividadeController extends Controller
      * @param  \App\Atividade  $atividade
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Atividade $atividade)
+     public function update(Request $request, $id)
     {
-        //
+        //faço as validações dos campos
+        //vetor com as mensagens de erro
+        $messages = array(
+            'title.required' => 'É obrigatório um título para a atividade',
+            'description.required' => 'É obrigatória uma descrição para a atividade',
+            'scheduledto.required' => 'É obrigatório o cadastro da data/hora da atividade',
+        );
+        //vetor com as especificações de validações
+        $regras = array(
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'scheduledto' => 'required|string',
+        );
+        //cria o objeto com as regras de validação
+        $validador = Validator::make($request->all(), $regras, $messages);
+        //executa as validações
+        if ($validador->fails()) {
+            return redirect("atividades/$id/edit")
+            ->withErrors($validador)
+            ->withInput($request->all);
+        }
+        //se passou pelas validações, processa e salva no banco...
+        $obj_atividade = Atividade::findOrFail($id);
+        $obj_atividade->title =       $request['title'];
+        $obj_atividade->description = $request['description'];
+        $obj_atividade->scheduledto = $request['scheduledto'];
+        $obj_atividade->save();
+        return redirect('/atividades')->with('success', 'Atividade alterada com sucesso!!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Atividade  $atividade
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Atividade $atividade)
+            public function delete($id)
     {
-        //
+        $obj_Atividade = Atividade::find($id);
+        return view('atividade.delete',['atividade' => $obj_Atividade]);
     }
+    public function destroy($id)
+    {
+        $obj_Atividade = Atividade::findOrFail($id);
+        $obj_Atividade->delete($id);
+        return redirect('/atividades')->with('sucess','Atividade excluída com Sucesso!!');
+    }
+
 }

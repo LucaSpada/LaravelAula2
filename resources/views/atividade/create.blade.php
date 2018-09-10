@@ -19,7 +19,7 @@
 {{csrf_field() }}
 Título: <input type="text" name="title"> <br>
 Descrição <input type="text" name="description"> <br>
-Agendado para: <input type="ddatetime-local" name="scheduleto"> <br>
+Agendado para: <input type="datetime-local" name="scheduledto"> <br>
 <input type="submit" value="Salvar">
 </form>
 
