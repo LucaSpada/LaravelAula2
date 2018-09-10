@@ -18,7 +18,7 @@
 <form action="/mensagens" method="post">
 {{csrf_field() }}
 Título: <input type="text" name="title"> <br>
-Descrição <input type="text" name="description"> <br>
+Descrição <input type="text" name="texto"> <br>
 Autor <input type="text" name="autor"> <br>
 <input type="submit" value="Salvar">
 </form>

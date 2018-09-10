@@ -59,8 +59,8 @@ class MensagemController extends Controller
         //se passou pelas validações, processa e salva no banco...
         $obj_Mensagem = new Mensagem();
         $obj_Mensagem->title =       $request['title'];
-        $obj_Mensagem->description = $request['texto'];
-        $obj_Mensagem->scheduledto = $request['autor'];
+        $obj_Mensagem->texto = $request['texto'];
+        $obj_Mensagem->autor = $request['autor'];
         $obj_Mensagem->save();
 
         return redirect('/mensagens')->with('success', 'Mensagem criada com sucesso!!');
