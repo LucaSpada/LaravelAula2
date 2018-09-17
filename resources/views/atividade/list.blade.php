@@ -15,8 +15,15 @@
 	<p><a href="/atividades/{{$atividade->id}}">{{$atividade->title}}</a></p>
 	<p>{{$atividade->description}}</p>
 	<br>
+  @auth<p>Ações:
+  <a href="/atividade/{{$atividade->id}}">Ver Mais</a>
+  <a href="/atividade/{{$atividade->id}}/edit">Editar</a>
+  <a href="/atividade/{{$atividade->id}}/delete">Deletar</a>
+  </p>
+@endauth
 @endforeach
 
 
-
-<!-- \Carbon\Carbon::parse($atividade->scheduledto)->format('d/m/Y h:m')  -->
+@auth
+<a href="/atividades/create">Criar novo registro </a>
+@endauth
